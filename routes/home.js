@@ -6,24 +6,6 @@ const Tesseract = require("tesseract.js");
 const vision = require("@google-cloud/vision");
 const router = Router();
 
-// config google drive with client token
-const oauth2Client = new google.auth.OAuth2();
-oauth2Client.setCredentials({
-	access_token: req.user.accessToken,
-});
-
-const drive = google.drive({
-	version: "v3",
-	auth: oauth2Client,
-});
-const client = new vision.ImageAnnotatorClient({
-	keyFilename: "./apikey.json",
-});
-
-router.get("/", function (req, res) {
-	res.render("home.html", { title: "Application Home" });
-});
-
 router.get("/dashboard", function (req, res) {
 	// if not user
 	if (typeof req.user == "undefined") res.redirect("/auth/login/google");
@@ -52,6 +34,23 @@ router.post("/upload", function (req, res) {
 	if (!req.user) res.redirect("/auth/login/google");
 	else {
 		// auth user
+		// config google drive with client token
+		const oauth2Client = new google.auth.OAuth2();
+		oauth2Client.setCredentials({
+			access_token: req.user.accessToken,
+		});
+
+		const drive = google.drive({
+			version: "v3",
+			auth: oauth2Client,
+		});
+		const client = new vision.ImageAnnotatorClient({
+			keyFilename: "./apikey.json",
+		});
+
+		router.get("/", function (req, res) {
+			res.render("home.html", { title: "Application Home" });
+		});
 
 		//move file to google drive
 

@@ -56,32 +56,21 @@ router.post("/upload", function (req, res) {
 
 		let { name: filename, mimetype, data } = req.files.file_upload;
 
-
+        var text = "";
         client.textDetection(
             Buffer.from(data)
             )
             .then((results) => {
-                const result = results[0].textAnnotations;
-                result.forEach((label) => console.log(label.description));
+                const result = results[0].textAnnotations.slice(1);
+                result.forEach((label) => text += label.description);
                 // console.log("Label Annotations Result:" + JSON.stringify(result, null, 2));
-                // console.log(result);
+                console.log(text);
             })
         
             .catch((err) => {
                 console.error("ERROR:", err);
             });
         
-
-
-		// Tesseract.recognize(Buffer.from(data), "chi_sim", {
-		// 	logger: (m) => console.log(m),
-		// })
-		// 	.then(({ data: { text } }) => {
-		// 		console.log(text);
-		// 	})
-		// 	.catch((err) => {
-		// 		console.log(err.message);
-		// 	});
 
 		const driveResponse = drive.files.create({
 			requestBody: {
@@ -96,7 +85,7 @@ router.post("/upload", function (req, res) {
 
 		driveResponse
 			.then((data) => {
-				console.log(data);
+				// console.log(data);
 				if (data.status == 200)
 					res.redirect("/dashboard?file=upload"); // success
 				else res.redirect("/dashboard?file=notupload"); // unsuccess

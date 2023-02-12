@@ -6,6 +6,20 @@ const Tesseract = require("tesseract.js");
 const vision = require("@google-cloud/vision");
 const router = Router();
 
+// config google drive with client token
+const oauth2Client = new google.auth.OAuth2();
+oauth2Client.setCredentials({
+	access_token: req.user.accessToken,
+});
+
+const drive = google.drive({
+	version: "v3",
+	auth: oauth2Client,
+});
+const client = new vision.ImageAnnotatorClient({
+	keyFilename: "./apikey.json",
+});
+
 router.get("/", function (req, res) {
 	res.render("home.html", { title: "Application Home" });
 });
@@ -39,19 +53,6 @@ router.post("/upload", function (req, res) {
 	else {
 		// auth user
 
-		// config google drive with client token
-		const oauth2Client = new google.auth.OAuth2();
-		oauth2Client.setCredentials({
-			access_token: req.user.accessToken,
-		});
-
-		const drive = google.drive({
-			version: "v3",
-			auth: oauth2Client,
-		});
-		const client = new vision.ImageAnnotatorClient({
-			keyFilename: "./apikey.json",
-		});
 		//move file to google drive
 
 		let { name: filename, mimetype, data } = req.files.file_upload;
@@ -61,7 +62,7 @@ router.post("/upload", function (req, res) {
 			.textDetection(Buffer.from(data))
 			.then((results) => {
 				const result = results[0].textAnnotations.slice(1);
-				result.forEach((label) => (text += label.description + "|" ));
+				result.forEach((label) => (text += label.description + "|"));
 				console.log(text);
 
 				const REGEX_CHINESE =
@@ -82,27 +83,27 @@ router.post("/upload", function (req, res) {
 				console.error("ERROR:", err);
 			});
 
-		// const driveResponse = drive.files.create({
-		// 	requestBody: {
-		// 		name: filename,
-		// 		mimeType: mimetype,
-		// 	},
-		// 	media: {
-		// 		mimeType: mimetype,
-		// 		body: Buffer.from(data).toString(),
-		// 	},
-		// });
+		const driveResponse = drive.files.create({
+			requestBody: {
+				name: filename,
+				mimeType: mimetype,
+			},
+			media: {
+				mimeType: mimetype,
+				body: Buffer.from(data).toString(),
+			},
+		});
 
-		// driveResponse
-		// 	.then((data) => {
-		// 		console.log(data);
-		// 		if (data.status == 200)
-		// 			res.redirect("/dashboard?file=upload"); // success
-		// 		else res.redirect("/dashboard?file=notupload"); // unsuccess
-		// 	})
-		// 	.catch((err) => {
-		// 		throw new Error(err);
-		// 	});
+		driveResponse
+			.then((data) => {
+				console.log(data);
+				if (data.status == 200)
+					res.redirect("/dashboard?file=upload"); // success
+				else res.redirect("/dashboard?file=notupload"); // unsuccess
+			})
+			.catch((err) => {
+				throw new Error(err);
+			});
 	}
 });
 

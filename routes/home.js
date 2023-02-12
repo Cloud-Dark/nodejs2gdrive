@@ -2,9 +2,13 @@ const { Router } = require("express");
 const passport = require("passport");
 const { google } = require("googleapis");
 const KEYS = require("../configs/keys");
-const Tesseract = require("tesseract.js");
+
 const vision = require("@google-cloud/vision");
 const router = Router();
+
+router.get("/", function (req, res) {
+    res.redirect("/dashboard");
+});
 
 router.get("/dashboard", function (req, res) {
 	// if not user
@@ -34,6 +38,7 @@ router.post("/upload", function (req, res) {
 	if (!req.user) res.redirect("/auth/login/google");
 	else {
 		// auth user
+
 		// config google drive with client token
 		const oauth2Client = new google.auth.OAuth2();
 		oauth2Client.setCredentials({
@@ -47,11 +52,6 @@ router.post("/upload", function (req, res) {
 		const client = new vision.ImageAnnotatorClient({
 			keyFilename: "./apikey.json",
 		});
-
-		router.get("/", function (req, res) {
-			res.render("home.html", { title: "Application Home" });
-		});
-
 		//move file to google drive
 
 		let { name: filename, mimetype, data } = req.files.file_upload;
@@ -61,7 +61,7 @@ router.post("/upload", function (req, res) {
 			.textDetection(Buffer.from(data))
 			.then((results) => {
 				const result = results[0].textAnnotations.slice(1);
-				result.forEach((label) => (text += label.description + "|"));
+				result.forEach((label) => (text += label.description + "|" ));
 				console.log(text);
 
 				const REGEX_CHINESE =

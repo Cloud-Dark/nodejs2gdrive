@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const passport = require("passport");
+const chalk = require('chalk');
 const { google } = require("googleapis");
 const KEYS = require("../configs/keys");
 
@@ -57,13 +58,17 @@ router.post("/upload", function (req, res) {
 		let { name: filename, mimetype, data } = req.files.file_upload;
 
 		var text = "";
+        var textgabung = "";
 		client
 			.textDetection(Buffer.from(data))
 			.then((results) => {
 				const result = results[0].textAnnotations.slice(1);
 				result.forEach((label) => (text += label.description + "|" ));
-				console.log(text);
-
+                const result2 = results[0].textAnnotations.slice(1);
+				result2.forEach((label) => (textgabung += label.description + " " ));
+                console.log(textgabung);
+                console.log(text.split('o').join(chalk.blue('o')));
+                console.log(text.split('O').join(chalk.blue('O')));
 				const REGEX_CHINESE =
 					/[\u4e00-\u9fff]|[\u3400-\u4dbf]|[\u{20000}-\u{2a6df}]|[\u{2a700}-\u{2b73f}]|[\u{2b740}-\u{2b81f}]|[\u{2b820}-\u{2ceaf}]|[\uf900-\ufaff]|[\u3300-\u33ff]|[\ufe30-\ufe4f]|[\uf900-\ufaff]|[\u{2f800}-\u{2fa1f}]/u;
 				const hasJapanese = (str) => REGEX_CHINESE.test(str);

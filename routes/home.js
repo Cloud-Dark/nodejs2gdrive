@@ -61,8 +61,7 @@ router.post("/upload", function (req, res) {
 			.textDetection(Buffer.from(data))
 			.then((results) => {
 				const result = results[0].textAnnotations.slice(1);
-				result.forEach((label) => (text += " " + label.description + " " ));
-				// console.log("Label Annotations Result:" + JSON.stringify(result, null, 2));
+				result.forEach((label) => (text += label.description + "|" ));
 				console.log(text);
 
 				const REGEX_CHINESE =
@@ -70,7 +69,7 @@ router.post("/upload", function (req, res) {
 				const hasJapanese = (str) => REGEX_CHINESE.test(str);
 
 				const seperateWords = (str) => {
-					let newStr = str.split(" ");
+					let newStr = str.split("|");
 					let chiWords = newStr.filter((string) => REGEX_CHINESE.test(string)); //All chinnese words
 					let engWords = newStr.filter((string) => !REGEX_CHINESE.test(string)); //All english words
 					let arrayOfDiffWords = [chiWords, engWords];
@@ -83,27 +82,27 @@ router.post("/upload", function (req, res) {
 				console.error("ERROR:", err);
 			});
 
-		const driveResponse = drive.files.create({
-			requestBody: {
-				name: filename,
-				mimeType: mimetype,
-			},
-			media: {
-				mimeType: mimetype,
-				body: Buffer.from(data).toString(),
-			},
-		});
+		// const driveResponse = drive.files.create({
+		// 	requestBody: {
+		// 		name: filename,
+		// 		mimeType: mimetype,
+		// 	},
+		// 	media: {
+		// 		mimeType: mimetype,
+		// 		body: Buffer.from(data).toString(),
+		// 	},
+		// });
 
-		driveResponse
-			.then((data) => {
-				// console.log(data);
-				if (data.status == 200)
-					res.redirect("/dashboard?file=upload"); // success
-				else res.redirect("/dashboard?file=notupload"); // unsuccess
-			})
-			.catch((err) => {
-				throw new Error(err);
-			});
+		// driveResponse
+		// 	.then((data) => {
+		// 		console.log(data);
+		// 		if (data.status == 200)
+		// 			res.redirect("/dashboard?file=upload"); // success
+		// 		else res.redirect("/dashboard?file=notupload"); // unsuccess
+		// 	})
+		// 	.catch((err) => {
+		// 		throw new Error(err);
+		// 	});
 	}
 });
 

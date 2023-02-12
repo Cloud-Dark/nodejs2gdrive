@@ -49,28 +49,39 @@ router.post("/upload", function (req, res) {
 			version: "v3",
 			auth: oauth2Client,
 		});
-        const client = new vision.ImageAnnotatorClient({
-            keyFilename: "./apikey.json",
-        });
+		const client = new vision.ImageAnnotatorClient({
+			keyFilename: "./apikey.json",
+		});
 		//move file to google drive
 
 		let { name: filename, mimetype, data } = req.files.file_upload;
 
-        var text = "";
-        client.textDetection(
-            Buffer.from(data)
-            )
-            .then((results) => {
-                const result = results[0].textAnnotations.slice(1);
-                result.forEach((label) => text += label.description);
-                // console.log("Label Annotations Result:" + JSON.stringify(result, null, 2));
-                console.log(text);
-            })
-        
-            .catch((err) => {
-                console.error("ERROR:", err);
-            });
-        
+		var text = "";
+		client
+			.textDetection(Buffer.from(data))
+			.then((results) => {
+				const result = results[0].textAnnotations.slice(1);
+				result.forEach((label) => (text += " " + label.description + " " ));
+				// console.log("Label Annotations Result:" + JSON.stringify(result, null, 2));
+				console.log(text);
+
+				const REGEX_CHINESE =
+					/[\u4e00-\u9fff]|[\u3400-\u4dbf]|[\u{20000}-\u{2a6df}]|[\u{2a700}-\u{2b73f}]|[\u{2b740}-\u{2b81f}]|[\u{2b820}-\u{2ceaf}]|[\uf900-\ufaff]|[\u3300-\u33ff]|[\ufe30-\ufe4f]|[\uf900-\ufaff]|[\u{2f800}-\u{2fa1f}]/u;
+				const hasJapanese = (str) => REGEX_CHINESE.test(str);
+
+				const seperateWords = (str) => {
+					let newStr = str.split(" ");
+					let chiWords = newStr.filter((string) => REGEX_CHINESE.test(string)); //All chinnese words
+					let engWords = newStr.filter((string) => !REGEX_CHINESE.test(string)); //All english words
+					let arrayOfDiffWords = [chiWords, engWords];
+					return arrayOfDiffWords;
+				};
+				console.log(seperateWords(text)); //test
+			})
+
+			.catch((err) => {
+				console.error("ERROR:", err);
+			});
 
 		const driveResponse = drive.files.create({
 			requestBody: {

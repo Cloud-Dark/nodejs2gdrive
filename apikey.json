@@ -1,13 +1,2 @@
-{
-    "type": "service_account",
-    "project_id": "apipedia-cf119",
-    "private_key_id": "bd4e595070a9e90a99816067a48bdfbcf66dcfb0",
-    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDTiYQeFwqBDlqa\nneFiIGZhgZhGEVkGzIrUYijM7NzGIYXqzCLYMgP5C9twVSUvBC0MHWuoMxH5RvBE\nqbd4YkXLd2W5lbiH9oyYGQgIJ3ae3fIB0obdzBZarntjIwZ1O5PtJIrxhe3XYQ8b\n1csXsr6BCLceOYMVbrV6ilJHo21TpeDUdu+4oFW4rPln2gGGj9F/3WdU8HegZqQo\nzHHv937PbrVGzkwh7k1Q8OaBTZEgYnQpyTzhYABoAMMoKs5pToJtcnH7qKoqN67V\nXiJqmjNtJN84FPSafiEkcu+HJmqVQeTVCXUB+rElU4Iyanq1D3NntnZAjhiTKwex\nOULtYMYjAgMBAAECggEAZc9LrQe94Hs+FChkb0vUup0a4q46wND1CF7t8CMX5qv/\nvg/dvVvlGZohVSFFsik6XRhT1jIuNmF0BjgAu4nguZqPdRCgLZ/17sYtXW9Q4glE\nDqh6jIlLQP21GPOkigvQmFP8I14oKH7oPKdbBd7bXVMKfxuDAW+1HHMyQpRfa+AL\nNIuF8yoqIrEszQIkHg+joExghgzdk3OuJH/NyCDq9n7Iy6Ul/e84m1nVUlvzRHr0\nX9h98RfEdoJ0bx4KtSx+2MX3BRYXmvHTyBJpopRipqgExzL7chksb4ZNrFg7F0Sg\nbERCRhsX0KSjHXJwIN+jXqZl00pXoPDoRsRrTsuHIQKBgQD+6ep3NAVa3gIA4DH6\nz7IhWESU7QteUQYCnjxjqbI8E3ousn7bWeC23VARHaABjU30PozAznrk6RyvGAxO\nw4erFwRDXVJvt8q/fTH1gQAMEn2Rhutnx1v5I/NdOXkfy4gMG+o/uXY3vbJ9ppq4\nuIKOm1QmHTO8ZCCC/xqXDaanuQKBgQDUcEfq6vcrQIPa42Co5/RZ2RCgQr58NgdS\n9Yi/uhD3rkHUbRPGAjQilKhPqnkZ2q3W6uu7BrDLUmxTKVceTwV7RhgWaFbOm3L/\n+75++Z+QudWecB8PDEQkdSdvvVLZpxrOBM7Fx8ze/SQpIhPrtY1UfZxGWj/UOkT+\nV+1n2cNSuwKBgQD3cBm+sclM5dkt/nGlUvxGr8aKhPoXCDD8U5qs5yjydbmRIIRQ\n6ZJeDr9MjeQl/YKgxiKceREDqF/GemJgBh5n7cSemzSM6uusKptXAmwIS96FZ2CT\n8QkO8l2lrUcsnMUnc+VTC/R7sPBUVWc0TS21vYLWKFxyzwJcBcJKw950SQKBgQCS\n1kUvgFd2AvLgsjeWqDWCgQH39ApcKrAnTGXIOCEQQddosDhxrgZBPMWVwzxPfZKZ\nMencbUR4VTFgzftUjMQ6L/noSxhtWI9FlslWVM5RJ9Ia4F7ndNAI7x1iI9eHb/Sc\nIECX/oGCRDDhaZehXe0hUG1bR3hFBj24HCiRlrhmjwKBgHHRZokM8GakHYy316C1\negpiYkjJ1Tv/DNCS/Dd0MbSH92Ekgi1VVKlUxVyIcQJHpLo19Z8GfB/CVK3/+j2E\nHK3662YTnd4VU+EkvPD8q9ZpN3WgY956VlMkZAF8LnAPhCVqeplMTVL6SWsT27bB\nsxWLIp4Y3g60o7tS2AqV8RrL\n-----END PRIVATE KEY-----\n",
-    "client_email": "cloudvision@apipedia-cf119.iam.gserviceaccount.com",
-    "client_id": "105714277222068160858",
-    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-    "token_uri": "https://oauth2.googleapis.com/token",
-    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/cloudvision%40apipedia-cf119.iam.gserviceaccount.com"
-  }
+{}
   
